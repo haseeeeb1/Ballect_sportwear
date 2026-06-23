@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ballect Sport Wear</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #0A0E1A;
+    --blue: #1E90FF;
+    --gold: #FFD700;
+    --white: #FFFFFF;
+    --gray: #8A8FA8;
+    --light: #F0F2F8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(10,14,26,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(30,144,255,0.15);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 3px;
+    color: var(--white);
+    text-decoration: none;
+  }
+  .logo span { color: var(--blue); }
+
+  nav ul {
+    list-style: none;
+    display: flex; gap: 36px;
+  }
+  nav ul a {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  nav ul a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--blue);
+    color: var(--white) !important;
+    padding: 10px 24px;
+    border-radius: 4px;
+  }
+  .nav-cta:hover { background: #0070e0 !important; color: var(--white) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 48px 80px;
+  }
+
+  /* jersey-stripe background pattern */
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(
+        -55deg,
+        transparent,
+        transparent 38px,
+        rgba(30,144,255,0.04) 38px,
+        rgba(30,144,255,0.04) 40px
+      );
+    z-index: 0;
+  }
+
+  .hero-glow {
+    position: absolute;
+    width: 700px; height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(30,144,255,0.18) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative; z-index: 1;
+    max-width: 680px;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-size: 11px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--blue);
+    margin-bottom: 24px;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 32px; height: 2px;
+    background: var(--blue);
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 10vw, 130px);
+    line-height: 0.92;
+    letter-spacing: 2px;
+    margin-bottom: 28px;
+  }
+  h1 .accent { color: var(--blue); }
+  h1 .gold   { color: var(--gold); }
+
+  .hero-sub {
+    font-size: 16px; line-height: 1.7;
+    color: var(--gray); max-width: 440px;
+    margin-bottom: 48px;
+  }
+
+  .btn-group { display: flex; gap: 16px; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--blue);
+    color: var(--white);
+    padding: 16px 36px;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    border: none; border-radius: 4px;
+    cursor: pointer; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-primary:hover { background: #0070e0; transform: translateY(-2px); }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--white);
+    padding: 15px 36px;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 4px;
+    cursor: pointer; text-decoration: none;
+    transition: border-color 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+  .btn-outline:hover { border-color: var(--white); transform: translateY(-2px); }
+
+  .hero-stats {
+    position: absolute; right: 48px; bottom: 80px;
+    display: flex; gap: 48px; z-index: 1;
+  }
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 48px; color: var(--white); line-height: 1;
+  }
+  .stat-num span { color: var(--blue); }
+  .stat-label {
+    font-size: 11px; color: var(--gray);
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ── TICKER ── */
+  .ticker {
+    background: var(--blue);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .ticker-inner {
+    display: inline-flex; gap: 0;
+    animation: ticker 22s linear infinite;
+  }
+  .ticker-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px; letter-spacing: 3px;
+    padding: 0 40px;
+    color: var(--white);
+  }
+  .ticker-dot {
+    color: rgba(255,255,255,0.4);
+    font-size: 18px;
+    display: inline-block;
+  }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /* ── SECTION COMMON ── */
+  section { padding: 100px 48px; }
+  .section-label {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(40px, 5vw, 64px);
+    line-height: 1;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+  }
+  .section-sub {
+    color: var(--gray); font-size: 15px;
+    line-height: 1.7; max-width: 480px;
+    margin-bottom: 56px;
+  }
+
+  /* ── CATEGORIES ── */
+  .categories { background: #0D1120; }
+
+  .cat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+
+  .cat-card {
+    position: relative;
+    border-radius: 8px; overflow: hidden;
+    aspect-ratio: 3/4;
+    cursor: pointer;
+    transition: transform 0.3s;
+  }
+  .cat-card:hover { transform: translateY(-6px); }
+  .cat-card:hover .cat-overlay { background: rgba(30,144,255,0.35); }
+
+  .cat-img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px;
+    background: linear-gradient(135deg, #141928 0%, #1a2040 100%);
+  }
+
+  .cat-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,14,26,0.9) 0%, rgba(10,14,26,0.1) 60%);
+    transition: background 0.3s;
+  }
+  .cat-name {
+    position: absolute; bottom: 24px; left: 24px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px; letter-spacing: 2px;
+  }
+  .cat-count {
+    position: absolute; bottom: 8px; left: 24px;
+    font-size: 11px; color: var(--blue);
+    letter-spacing: 2px; text-transform: uppercase;
+  }
+
+  /* ── PRODUCTS ── */
+  .products { background: var(--navy); }
+
+  .prod-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  .prod-card {
+    background: #0D1120;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid rgba(30,144,255,0.08);
+  }
+  .prod-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(30,144,255,0.12);
+  }
+
+  .prod-img {
+    height: 260px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 90px;
+    background: linear-gradient(135deg, #111828 0%, #172035 100%);
+    position: relative;
+  }
+  .prod-badge {
+    position: absolute; top: 16px; left: 16px;
+    background: var(--blue);
+    color: var(--white);
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 4px 12px; border-radius: 2px;
+  }
+  .prod-badge.gold { background: var(--gold); color: var(--navy); }
+
+  .prod-info { padding: 20px; }
+  .prod-name {
+    font-weight: 700; font-size: 15px;
+    margin-bottom: 4px;
+  }
+  .prod-cat {
+    font-size: 11px; color: var(--blue);
+    letter-spacing: 2px; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .prod-foot {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .prod-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px; color: var(--white);
+  }
+  .prod-price .old {
+    font-size: 14px; color: var(--gray);
+    text-decoration: line-through;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    margin-right: 6px;
+  }
+  .add-btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: none; cursor: pointer;
+    color: var(--white);
+    font-size: 22px; font-weight: 300;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .add-btn:hover { background: #0070e0; transform: scale(1.1); }
+
+  /* ── WHY US ── */
+  .why { background: #0D1120; }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .why-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .feature {
+    padding: 28px;
+    background: var(--navy);
+    border-radius: 8px;
+    border-left: 3px solid var(--blue);
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .feature:hover { border-color: var(--gold); transform: translateY(-4px); }
+
+  .feature-icon { font-size: 32px; margin-bottom: 14px; }
+  .feature-title {
+    font-weight: 700; font-size: 15px; margin-bottom: 8px;
+  }
+  .feature-desc {
+    font-size: 13px; color: var(--gray); line-height: 1.6;
+  }
+
+  .why-visual {
+    position: relative;
+    height: 500px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .why-circle {
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #111828, #1a2040);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 160px;
+    border: 1px solid rgba(30,144,255,0.2);
+    box-shadow: 0 0 80px rgba(30,144,255,0.1);
+  }
+  .why-ring {
+    position: absolute;
+    border: 1px solid rgba(30,144,255,0.12);
+    border-radius: 50%;
+    animation: pulse-ring 3s ease-in-out infinite;
+  }
+  .why-ring:nth-child(1) { width: 400px; height: 400px; animation-delay: 0s; }
+  .why-ring:nth-child(2) { width: 460px; height: 460px; animation-delay: 0.6s; }
+  .why-ring:nth-child(3) { width: 520px; height: 520px; animation-delay: 1.2s; }
+  @keyframes pulse-ring {
+    0%,100% { opacity: 0.3; }
+    50%      { opacity: 0.08; }
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { background: var(--navy); }
+
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .testi-card {
+    background: #0D1120;
+    border-radius: 8px;
+    padding: 32px;
+    border: 1px solid rgba(30,144,255,0.08);
+    transition: transform 0.2s;
+  }
+  .testi-card:hover { transform: translateY(-4px); }
+
+  .stars { color: var(--gold); font-size: 16px; margin-bottom: 16px; letter-spacing: 2px; }
+  .testi-text {
+    font-size: 14px; line-height: 1.7; color: #C8CCE0;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+  .testi-name { font-weight: 700; font-size: 14px; }
+  .testi-role { font-size: 11px; color: var(--blue); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 2px; }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: linear-gradient(135deg, #0D1120 0%, #0A1830 50%, #0D1120 100%);
+    padding: 100px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -55deg, transparent, transparent 38px,
+      rgba(30,144,255,0.03) 38px, rgba(30,144,255,0.03) 40px
+    );
+  }
+  .cta-section .section-title { margin-bottom: 16px; }
+  .cta-inner { position: relative; z-index: 1; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #06080F;
+    padding: 64px 48px 32px;
+    border-top: 1px solid rgba(30,144,255,0.1);
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 48px;
+  }
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px; letter-spacing: 3px;
+    margin-bottom: 16px;
+  }
+  .footer-logo span { color: var(--blue); }
+  .footer-tagline {
+    color: var(--gray); font-size: 13px; line-height: 1.7;
+    max-width: 260px; margin-bottom: 24px;
+  }
+  .social-links { display: flex; gap: 12px; }
+  .social-btn {
+    width: 38px; height: 38px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    text-decoration: none;
+  }
+  .social-btn:hover { border-color: var(--blue); background: rgba(30,144,255,0.1); }
+
+  .footer-col h4 {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 2.5px; text-transform: uppercase;
+    color: var(--white); margin-bottom: 20px;
+  }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul a {
+    color: var(--gray); font-size: 13px;
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-col ul a:hover { color: var(--white); }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding-top: 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12px; color: var(--gray);
+  }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    nav ul { display: none; }
+    .hero { padding: 100px 24px 160px; }
+    .hero-stats { right: 24px; bottom: 40px; gap: 28px; }
+    .stat-num { font-size: 36px; }
+    section { padding: 72px 24px; }
+    .why-grid { grid-template-columns: 1fr; }
+    .why-visual { height: 280px; }
+    .why-circle { width: 240px; height: 240px; font-size: 100px; }
+    .why-ring:nth-child(1) { width: 270px; height: 270px; }
+    .why-ring:nth-child(2) { width: 310px; height: 310px; }
+    .why-ring:nth-child(3) { display: none; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Ball<span>ect</span></a>
+  <ul>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#products">Shop</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#contact" class="nav-cta">Shop Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Premium Sportswear</div>
+    <h1>WEAR THE <span class="accent">GAME.</span><br>OWN THE <span class="gold">FIELD.</span></h1>
+    <p class="hero-sub">Ballect Sport Wear — high-performance jerseys, kits, and sportswear crafted for athletes who demand more. Quality you can feel, style you can own.</p>
+    <div class="btn-group">
+      <a href="#products" class="btn-primary">Explore Collection</a>
+      <a href="#categories" class="btn-outline">View Categories</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div>
+      <div class="stat-num">500<span>+</span></div>
+      <div class="stat-label">Products</div>
+    </div>
+    <div>
+      <div class="stat-num">10K<span>+</span></div>
+      <div class="stat-label">Happy Clients</div>
+    </div>
+    <div>
+      <div class="stat-num">100<span>%</span></div>
+      <div class="stat-label">Quality</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">FOOTBALL KITS</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">CRICKET JERSEYS</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">BASKETBALL WEAR</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">CUSTOM PRINTING</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">TEAM ORDERS</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">PREMIUM FABRIC</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">FAST DELIVERY</span><span class="ticker-dot">✦</span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item">FOOTBALL KITS</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">CRICKET JERSEYS</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">BASKETBALL WEAR</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">CUSTOM PRINTING</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">TEAM ORDERS</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">PREMIUM FABRIC</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">FAST DELIVERY</span><span class="ticker-dot">✦</span>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories" id="categories">
+  <div class="section-label">Browse by Sport</div>
+  <div class="section-title">Shop by Category</div>
+  <p class="section-sub">From football pitches to cricket fields — we've got every sport covered with elite-grade sportswear.</p>
+
+  <div class="cat-grid">
+    <div class="cat-card">
+      <div class="cat-img">⚽</div>
+      <div class="cat-overlay"></div>
+      <div class="cat-name">Football</div>
+      <div class="cat-count">Full Kits & Jerseys</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-img">🏏</div>
+      <div class="cat-overlay"></div>
+      <div class="cat-name">Cricket</div>
+      <div class="cat-count">Match Uniforms</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-img">🏀</div>
+      <div class="cat-overlay"></div>
+      <div class="cat-name">Basketball</div>
+      <div class="cat-count">Jerseys & Shorts</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-img">🏃</div>
+      <div class="cat-overlay"></div>
+      <div class="cat-name">Training</div>
+      <div class="cat-count">Gym & Fitness Wear</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-img">🥋</div>
+      <div class="cat-overlay"></div>
+      <div class="cat-name">Custom</div>
+      <div class="cat-count">Team Orders Welcome</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products" id="products">
+  <div class="section-label">Latest Arrivals</div>
+  <div class="section-title">Featured Products</div>
+  <p class="section-sub">Handpicked premium sportswear — built for performance, designed to turn heads.</p>
+
+  <div class="prod-grid">
+    <div class="prod-card">
+      <div class="prod-img">
+        <div class="prod-badge">New</div>
+        ⚽
+      </div>
+      <div class="prod-info">
+        <div class="prod-cat">Football</div>
+        <div class="prod-name">Pro Match Jersey — Home</div>
+        <div class="prod-foot">
+          <div class="prod-price">PKR 1,800</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-img">
+        <div class="prod-badge gold">Best Seller</div>
+        🏏
+      </div>
+      <div class="prod-info">
+        <div class="prod-cat">Cricket</div>
+        <div class="prod-name">Elite Cricket Kit — Full Set</div>
+        <div class="prod-foot">
+          <div class="prod-price"><span class="old">PKR 3,500</span>PKR 2,800</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-img">
+        <div class="prod-badge">Custom</div>
+        🏀
+      </div>
+      <div class="prod-info">
+        <div class="prod-cat">Basketball</div>
+        <div class="prod-name">Team Jersey + Shorts Combo</div>
+        <div class="prod-foot">
+          <div class="prod-price">PKR 2,200</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+    <div class="prod-card">
+      <div class="prod-img">
+        🏃
+      </div>
+      <div class="prod-info">
+        <div class="prod-cat">Training</div>
+        <div class="prod-name">Performance Track Suit</div>
+        <div class="prod-foot">
+          <div class="prod-price">PKR 3,200</div>
+          <button class="add-btn">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why" id="why">
+  <div class="why-grid">
+    <div>
+      <div class="section-label">Our Promise</div>
+      <div class="section-title">Why Choose<br>Ballect?</div>
+      <p class="section-sub">We don't just make sportswear — we engineer confidence on the field.</p>
+      <div class="why-features">
+        <div class="feature">
+          <div class="feature-icon">🧵</div>
+          <div class="feature-title">Premium Fabric</div>
+          <div class="feature-desc">Sweat-wicking, durable, breathable materials that move with you.</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🎨</div>
+          <div class="feature-title">Custom Printing</div>
+          <div class="feature-desc">Your logo, name, or number — printed sharp and lasting.</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🚚</div>
+          <div class="feature-title">Fast Delivery</div>
+          <div class="feature-desc">Nationwide shipping with quick turnaround for team orders.</div>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">💰</div>
+          <div class="feature-title">Best Prices</div>
+          <div class="feature-desc">Wholesale & retail rates that won't break your budget.</div>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual">
+      <div class="why-ring"></div>
+      <div class="why-ring"></div>
+      <div class="why-ring"></div>
+      <div class="why-circle">🏆</div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-label">Happy Customers</div>
+  <div class="section-title">What Players Say</div>
+  <p class="section-sub">Trusted by teams and individual athletes across Pakistan.</p>
+
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Ballect ne hamare poore football team ka kit banaya. Quality bilkul zabardast thi — fabric, printing sab perfect. Bahut satisfied hain!"</p>
+      <div class="testi-name">Ahmed Raza</div>
+      <div class="testi-role">Football Team Captain</div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Cricket jersey order ki thi, delivery bhi fast ayi aur quality bhi mast. Custom number printing ekdum clear tha. Highly recommended!"</p>
+      <div class="testi-name">Usman Ali</div>
+      <div class="testi-role">Club Cricket Player</div>
+    </div>
+    <div class="testi-card">
+      <div class="stars">★★★★★</div>
+      <p class="testi-text">"Price bhi reasonable hai aur quality bhi market se better. Hamari school team ke liye 40 jerseys banwai — sab ne tarif ki!"</p>
+      <div class="testi-name">Zainab Malik</div>
+      <div class="testi-role">School Sports Coordinator</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-inner">
+    <div class="section-label">Get Started</div>
+    <div class="section-title">Ready to Order?</div>
+    <p class="section-sub" style="margin:0 auto 40px; text-align:center;">Contact us on WhatsApp or Instagram for custom orders, team kits, and bulk pricing.</p>
+    <div class="btn-group" style="justify-content:center;">
+      <a href="https://wa.me/923416353821" class="btn-primary" target="_blank">📱 03416353821</a>
+      <a href="https://www.instagram.com/ballect_sport_wear" class="btn-outline" target="_blank">📸 Instagram</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">Ball<span>ect</span></div>
+      <p class="footer-tagline">Premium sportswear for athletes who demand the best. Custom kits, jerseys, and team uniforms across Pakistan.</p>
+      <div class="social-links">
+        <a href="https://www.instagram.com/ballect_sport_wear" class="social-btn" target="_blank">📸</a>
+        <a href="https://wa.me/923416353821" class="social-btn" target="_blank">📱</a>
+        <a href="#" class="social-btn">📘</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">Football Kits</a></li>
+        <li><a href="#">Cricket Jerseys</a></li>
+        <li><a href="#">Basketball Wear</a></li>
+        <li><a href="#">Training Gear</a></li>
+        <li><a href="#">Custom Orders</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Our Quality</a></li>
+        <li><a href="#">Team Orders</a></li>
+        <li><a href="#">Wholesale</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <ul>
+        <li><a href="#">WhatsApp Us</a></li>
+        <li><a href="#">Size Guide</a></li>
+        <li><a href="#">Delivery Info</a></li>
+        <li><a href="#">Returns</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Ballect Sport Wear. All rights reserved.</span>
+    <span>Made with ⚡ for champions</span>
+  </div>
+</footer>
+
+</body>
+</html>
